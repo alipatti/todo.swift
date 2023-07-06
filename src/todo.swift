@@ -34,7 +34,7 @@ let CHRONO = Chrono()
 @main
 struct Todo: AsyncParsableCommand {
     static var configuration = CommandConfiguration(
-        abstract: "Create, list, and edit todo items from Apple's builtin Reminders app.",
+        abstract: "A command line app to manage your Apple reminders.",
 
         version: "0.1.0",
 
