@@ -56,9 +56,8 @@ struct Add: AsyncParsableCommand {
     @Option(name: .shortAndLong, help: "The list to add the reminder to.")
     var list: String?
 
-    // TODO: incorporate this. default priority should be low, with options to set to med or high
     @Option(name: .shortAndLong, help: "The priority of the reminder.")
-    var priority: String = "low" // | "high" | "med"
+    var priority: String // "none" | "high" | "med" | "low"
 
     func run() async throws {
         let store = try await getStore()
