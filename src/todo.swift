@@ -51,13 +51,13 @@ struct Add: AsyncParsableCommand {
 
     @Option(name: .shortAndLong,
             help: "The due date of the reminder. Supports natural language input, e.g. 'next friday'.")
-    var dueDate: String?
+    var dueDate: String = "today"
 
     @Option(name: .shortAndLong, help: "The list to add the reminder to.")
     var list: String?
 
     @Option(name: .shortAndLong, help: "The priority of the reminder.")
-    var priority: String // "none" | "high" | "med" | "low"
+    var priority: String = "none" // | "high" | "med" | "low"
 
     func run() async throws {
         let store = try await getStore()
@@ -76,10 +76,8 @@ struct Add: AsyncParsableCommand {
         if let p = PRIORITIES[priority] { task.priority = p }
         else { fatalError("Invalid priority: \(priority)") }
 
-        if let dueDate {
-            let date = parseDate(dueDate)
-            task.dueDateComponents = Calendar.current.dateComponents([.day, .year, .month], from: date)
-        }
+        let date = parseDate(dueDate)
+        task.dueDateComponents = Calendar.current.dateComponents([.day, .year, .month], from: date)
 
         try store.save(task, commit: true)
 
